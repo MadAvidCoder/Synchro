@@ -43,12 +43,17 @@ animations = [{
 
 [node name="Node2D" type="Node2D"]
 
+[node name="Line2D" type="Line2D" parent="."]
+points = PackedVector2Array(0, 324, 1152, 324)
+default_color = Color(0, 0, 0, 1)
+
 [node name="TopPirate" type="AnimatedSprite2D" parent="."]
+position = Vector2(154, 229)
 sprite_frames = SubResource("SpriteFrames_g8f2e")
 speed_scale = 2.0
 
 [node name="BottomPirate" type="AnimatedSprite2D" parent="."]
-position = Vector2(194, 31)
+position = Vector2(154, 419)
 sprite_frames = SubResource("SpriteFrames_g8f2e")
-frame_progress = 0.0520359
 speed_scale = 2.0
+flip_v = true
