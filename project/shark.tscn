@@ -6,8 +6,7 @@
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("1_fvbw4")
 
-[node name="RigidBody2D" type="RigidBody2D" parent="."]
-lock_rotation = true
+[node name="Body" type="Area2D" parent="."]
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="RigidBody2D"]
+[node name="Collision" type="CollisionPolygon2D" parent="Body"]
 polygon = PackedVector2Array(40, -530, 250, -320, 400, -80, 450, 20, 500, 330, 500, 520, -500, 520, -500, 320, -450, 30, -250, -320, -50, -530)

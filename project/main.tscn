@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://5pi4avo88sfa"]
+[gd_scene load_steps=13 format=3 uid="uid://5pi4avo88sfa"]
 
 [ext_resource type="Texture2D" uid="uid://5lksu436y5fg" path="res://pirate_0.png" id="1_rl2rh"]
 [ext_resource type="Script" path="res://main.gd" id="1_to4nk"]
@@ -9,6 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://kvhpgmio4teq" path="res://pirate_5.png" id="6_yt208"]
 [ext_resource type="Texture2D" uid="uid://cgj73rfnyxolp" path="res://pirate_6.png" id="7_d6eae"]
 [ext_resource type="Texture2D" uid="uid://dqp85x542ptes" path="res://pirate_7.png" id="8_4cfxr"]
+[ext_resource type="FontFile" uid="uid://dioipkk1bcbd0" path="res://prstart.ttf" id="10_dvuwo"]
+[ext_resource type="Texture2D" uid="uid://cuplalmc32qg1" path="res://Over.png" id="11_rba4c"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_g8f2e"]
 animations = [{
@@ -48,27 +50,78 @@ script = ExtResource("1_to4nk")
 [node name="PirateTop" type="AnimatedSprite2D" parent="."]
 position = Vector2(194, 225)
 sprite_frames = SubResource("SpriteFrames_g8f2e")
-frame = 4
-frame_progress = 0.283262
-speed_scale = 2.0
+speed_scale = 2.3
 
-[node name="Body" type="CharacterBody2D" parent="PirateTop"]
+[node name="Body" type="Area2D" parent="PirateTop"]
+collision_mask = 4
 
 [node name="Collision" type="CollisionPolygon2D" parent="PirateTop/Body"]
-polygon = PackedVector2Array(49, 89, 49, 79, 32, 71, 32, 49, 62, 49, 98, 26, 102, 19, 101, 1, 76, -18, 58, -18, 50, -29, 40, -30, 40, -48, 55, -49, 59, -66, 37, -85, 20, -100, 1, -102, -18, -89, -42, -78, -52, -66, -51, -57, -27, -52, -28, -27, -31, 33, -32, 49, -62, 58, -47, 89)
+polygon = PackedVector2Array(16, 88, 24, 81, 36, 74, 32, 49, 62, 49, 74, 32, 72, 13, 97, 5, 76, -18, 58, -18, 50, -29, 40, -30, 40, -48, 55, -49, 59, -66, 37, -85, 20, -100, 1, -102, -18, -89, -42, -78, -52, -66, -51, -57, -27, -52, -28, -27, -31, 33, -32, 49, -62, 58, -47, 89)
 
 [node name="PirateBottom" type="AnimatedSprite2D" parent="."]
 position = Vector2(194, 422)
 scale = Vector2(1, -1)
 sprite_frames = SubResource("SpriteFrames_g8f2e")
-speed_scale = 2.0
+speed_scale = 2.3
 
-[node name="Body" type="CharacterBody2D" parent="PirateBottom"]
-up_direction = Vector2(0, 1)
+[node name="Body" type="Area2D" parent="PirateBottom"]
+collision_layer = 2
+collision_mask = 8
 
 [node name="Collision" type="CollisionPolygon2D" parent="PirateBottom/Body"]
-polygon = PackedVector2Array(49, 89, 49, 79, 32, 71, 32, 49, 62, 49, 98, 26, 102, 19, 101, 1, 76, -18, 58, -18, 50, -29, 40, -30, 40, -48, 55, -49, 59, -66, 37, -85, 20, -100, 1, -102, -18, -89, -42, -78, -52, -66, -51, -57, -27, -52, -28, -27, -31, 33, -32, 49, -62, 58, -47, 89)
+polygon = PackedVector2Array(16, 88, 24, 81, 36, 74, 32, 49, 62, 49, 74, 32, 72, 13, 97, 5, 76, -18, 58, -18, 50, -29, 40, -30, 40, -48, 55, -49, 59, -66, 37, -85, 20, -100, 1, -102, -18, -89, -42, -78, -52, -66, -51, -57, -27, -52, -28, -27, -31, 33, -32, 49, -62, 58, -47, 89)
 
 [node name="Line2D" type="Line2D" parent="."]
 points = PackedVector2Array(0, 324, 1152, 324)
 default_color = Color(0, 0, 0, 1)
+
+[node name="ScoreText" type="RichTextLabel" parent="."]
+offset_left = 10.0
+offset_top = 9.0
+offset_right = 174.0
+offset_bottom = 49.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("10_dvuwo")
+theme_override_font_sizes/normal_font_size = 28
+text = "Score:"
+scroll_active = false
+autowrap_mode = 0
+deselect_on_focus_loss_enabled = false
+drag_and_drop_selection_enabled = false
+language = "en"
+
+[node name="ScoreNumber" type="RichTextLabel" parent="."]
+offset_left = 8.0
+offset_top = 43.0
+offset_right = 175.0
+offset_bottom = 83.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("10_dvuwo")
+theme_override_font_sizes/normal_font_size = 28
+text = "1000"
+scroll_active = false
+autowrap_mode = 0
+deselect_on_focus_loss_enabled = false
+drag_and_drop_selection_enabled = false
+language = "en"
+
+[node name="GameOver" type="Node2D" parent="."]
+
+[node name="Polygon2D" type="Polygon2D" parent="GameOver"]
+color = Color(1, 1, 1, 0.678431)
+polygon = PackedVector2Array(0, 0, 1152, 0, 1152, 648, 0, 648)
+
+[node name="Over" type="Sprite2D" parent="GameOver"]
+position = Vector2(576, 236)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("11_rba4c")
+
+[node name="Again" type="Button" parent="GameOver"]
+offset_left = 528.0
+offset_top = 374.0
+offset_right = 623.0
+offset_bottom = 405.0
+text = "Play Again?"
+
+[connection signal="area_entered" from="PirateTop/Body" to="." method="_on_body_area_entered"]
+[connection signal="area_entered" from="PirateBottom/Body" to="." method="_on_body_area_entered"]
