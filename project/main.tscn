@@ -59,7 +59,7 @@ speed_scale = 2.3
 collision_mask = 4
 
 [node name="Collision" type="CollisionPolygon2D" parent="PirateTop/Body"]
-polygon = PackedVector2Array(16, 88, 24, 81, 36, 74, 32, 49, 62, 49, 74, 32, 72, 13, 97, 5, 76, -18, 58, -18, 50, -29, 40, -30, 40, -48, 55, -49, 59, -66, 37, -85, 20, -100, 1, -102, -18, -89, -42, -78, -52, -66, -51, -57, -27, -52, -28, -27, -31, 33, -32, 49, -62, 58, -47, 89)
+polygon = PackedVector2Array(22, 93, 26, 84, 26, 64, 27, 42, 57, 31, 74, 32, 72, 13, 79, 3, 76, -18, 58, -18, 50, -29, 40, -30, 40, -48, 55, -49, 59, -66, 37, -85, 20, -100, 1, -102, -18, -89, -42, -78, -52, -66, -51, -57, -27, -52, -28, -27, -31, 33, -23, 60, -36, 75, -28, 93)
 
 [node name="PirateBottom" type="AnimatedSprite2D" parent="."]
 position = Vector2(194, 422)
@@ -72,7 +72,7 @@ collision_layer = 2
 collision_mask = 8
 
 [node name="Collision" type="CollisionPolygon2D" parent="PirateBottom/Body"]
-polygon = PackedVector2Array(16, 88, 24, 81, 36, 74, 32, 49, 62, 49, 74, 32, 72, 13, 97, 5, 76, -18, 58, -18, 50, -29, 40, -30, 40, -48, 55, -49, 59, -66, 37, -85, 20, -100, 1, -102, -18, -89, -42, -78, -52, -66, -51, -57, -27, -52, -28, -27, -31, 33, -32, 49, -62, 58, -47, 89)
+polygon = PackedVector2Array(17, 85, 22, 76, 26, 64, 27, 42, 57, 31, 74, 32, 72, 13, 79, 3, 76, -18, 58, -18, 50, -29, 40, -30, 40, -48, 55, -49, 59, -66, 37, -85, 20, -100, 1, -102, -18, -89, -42, -78, -52, -66, -51, -57, -27, -52, -28, -27, -31, 33, -23, 60, -29, 66, -29, 85)
 
 [node name="Line2D" type="Line2D" parent="."]
 z_index = 1
@@ -100,7 +100,7 @@ offset_bottom = 83.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("10_dvuwo")
 theme_override_font_sizes/font_size = 28
-text = "1000"
+text = "0"
 language = "en"
 
 [node name="GameOver" type="Node2D" parent="."]

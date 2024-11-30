@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://d3d47hyvdtrb8" path="res://shark.png" id="1_fvbw4"]
 
-[node name="SharkTop" type="Sprite2D"]
+[node name="Shark" type="Sprite2D"]
 z_index = -1
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("1_fvbw4")
