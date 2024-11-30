@@ -38,7 +38,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5agpc"]
-size = Vector2(450, 240)
+size = Vector2(390, 236.667)
 
 [node name="Seagull" type="AnimatedSprite2D"]
 z_index = -1
@@ -50,5 +50,5 @@ flip_h = true
 [node name="Body" type="Area2D" parent="."]
 
 [node name="Collision" type="CollisionShape2D" parent="Body"]
-position = Vector2(-68.3333, -1.58946e-06)
+position = Vector2(-98.3333, -1.66667)
 shape = SubResource("RectangleShape2D_5agpc")

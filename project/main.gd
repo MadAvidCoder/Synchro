@@ -4,16 +4,14 @@ var top = 267
 var top_vel = 0
 var bottom = 281
 var bottom_vel = 0
-var grav = 1400
+var grav = 1700
 var top_lock = false
 var bottom_lock = false
 var top_buf = []
 var over = true
 var bottom_buf = []
-var top_dist = 3
-var top_gull_dist = 2
-var bottom_dist = 4
-var bottom_gull_dist = 1
+var top_dist = 5
+var bottom_dist = 6
 var speed = 1.2
 var count = 0
 var score = 0
@@ -65,7 +63,7 @@ func reset() -> void:
 func _process(delta: float) -> void:
 	if not over:
 		if Input.is_action_just_pressed("top_up") and not top_lock:
-			top_vel = 650
+			top_vel = 820
 			top_lock = true
 		else:
 			pirate_top.play("default")
@@ -77,7 +75,7 @@ func _process(delta: float) -> void:
 			top_lock = false
 		
 		if Input.is_action_just_pressed("bottom_down") and not bottom_lock:
-			bottom_vel = 650
+			bottom_vel = 820
 			bottom_lock = true
 		else:
 			pirate_bottom.play("default")
@@ -88,12 +86,12 @@ func _process(delta: float) -> void:
 		if pirate_bottom.position.y < 427:
 			bottom_lock = false
 		
-		if count > 3:
+		if count > 4:
 			inst_top.hide()
 			inst_bot.hide()
 			
 		if speed < 2:
-			if count < 5:
+			if count < 7:
 				count += delta
 			else:
 				speed += delta/175
