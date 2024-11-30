@@ -108,7 +108,7 @@ visible = false
 z_index = 2
 
 [node name="Fill" type="Polygon2D" parent="GameOver"]
-color = Color(1, 1, 1, 0.678431)
+color = Color(1, 1, 1, 0.541176)
 polygon = PackedVector2Array(0, 0, 1152, 0, 1152, 648, 0, 648)
 
 [node name="Over" type="Sprite2D" parent="GameOver"]
@@ -135,10 +135,11 @@ scale = Vector2(0.4, 0.4)
 texture = ExtResource("13_te485")
 
 [node name="GameStart" type="Node2D" parent="."]
+visible = false
 z_index = 3
 
 [node name="Fill" type="Polygon2D" parent="GameStart"]
-color = Color(1, 1, 1, 0.678431)
+color = Color(1, 1, 1, 0.541176)
 polygon = PackedVector2Array(0, 0, 1152, 0, 1152, 648, 0, 648)
 
 [node name="Logo" type="Sprite2D" parent="GameStart"]
