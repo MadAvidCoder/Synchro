@@ -32,6 +32,7 @@ var seagulls_areas = []
 @onready var inst_top = $InstructionsTop
 @onready var inst_bot = $InstructionsBottom
 @onready var start_disp = $GameStart
+@onready var high_score_num = $HighScoreNumber
 
 func reset() -> void:
 	for i in top_buf:
@@ -104,6 +105,7 @@ func _process(delta: float) -> void:
 		score += delta*10
 		score_num.text = str(floor(score))
 		if score > high_score: high_score = score
+		high_score_num.text = str(floor(high_score))
 		
 		if top_dist <= 0:
 			var rand = randf()
