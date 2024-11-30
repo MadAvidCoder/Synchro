@@ -1,6 +1,5 @@
 extends Node2D
 
-@onready var shark = preload("res://shark.tscn")
 var top = 267
 var top_vel = 0
 var bottom = 281
@@ -9,7 +8,7 @@ var grav = 1400
 var top_lock = false
 var bottom_lock = false
 var top_buf = []
-var over = false
+var over = true
 var bottom_buf = []
 var top_dist = 3
 var bottom_dist = 5
@@ -20,9 +19,39 @@ var doubloons = []
 var doubloons_areas = []
 var bottom_buf_areas = []
 var top_buf_areas = []
+@onready var shark = preload("res://shark.tscn")
 @onready var score_num = $ScoreNumber
 @onready var pirate_top = $PirateTop
 @onready var pirate_bottom = $PirateBottom
+@onready var over_disp = $GameOver
+@onready var inst_top = $InstructionsTop
+@onready var inst_bot = $InstructionsBottom
+@onready var start_disp = $GameStart
+
+func reset() -> void:
+	for i in top_buf:
+		i.queue_free()
+	top_buf = []
+	for i in bottom_buf:
+		i.queue_free()
+	bottom_buf = []
+	top_vel = 0
+	bottom_vel = 0
+	top_lock = false
+	bottom_lock = false
+	over = false
+	top_dist = 3
+	bottom_dist = 5
+	speed = 1.2
+	count = 0
+	score = 0
+	doubloons = []
+	doubloons_areas = []
+	bottom_buf_areas = []
+	top_buf_areas = []
+	pirate_top.position = Vector2(194, 225)
+	pirate_bottom.position = Vector2(194, 422)
+	over_disp.hide()
 
 func _process(delta: float) -> void:
 	if not over:
@@ -50,8 +79,12 @@ func _process(delta: float) -> void:
 		if pirate_bottom.position.y < 427:
 			bottom_lock = false
 		
+		if count > 3:
+			inst_top.hide()
+			inst_bot.hide()
+			
 		if speed < 2:
-			if count < 2:
+			if count < 5:
 				count += delta
 			else:
 				speed += delta/175
@@ -112,6 +145,13 @@ func _process(delta: float) -> void:
 func _on_body_area_entered(area: Area2D) -> void:
 	if area in top_buf_areas or area in bottom_buf_areas:
 		over = true
-		print(over)
+		over_disp.show()
 	elif area in doubloons_areas:
 		score += 50
+
+func _on_again_pressed() -> void:
+	reset()
+
+func _on_start_pressed() -> void:
+	over = false
+	start_disp.hide()
