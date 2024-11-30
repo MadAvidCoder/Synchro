@@ -1,3 +1,160 @@
-[gd_scene format=3 uid="uid://5pi4avo88sfa"]
+[gd_scene load_steps=16 format=3 uid="uid://5pi4avo88sfa"]
+
+[ext_resource type="Texture2D" uid="uid://5lksu436y5fg" path="res://pirate_0.png" id="1_rl2rh"]
+[ext_resource type="Script" path="res://main.gd" id="1_to4nk"]
+[ext_resource type="Texture2D" uid="uid://dnsskktbdjp5w" path="res://pirate_1.png" id="2_dm23r"]
+[ext_resource type="Texture2D" uid="uid://ct27hi2cg4rme" path="res://pirate_2.png" id="3_pmr3y"]
+[ext_resource type="Texture2D" uid="uid://c535a04e5byq2" path="res://pirate_3.png" id="4_so750"]
+[ext_resource type="Texture2D" uid="uid://x2d6fwocqsjp" path="res://pirate_4.png" id="5_aritt"]
+[ext_resource type="Texture2D" uid="uid://kvhpgmio4teq" path="res://pirate_5.png" id="6_yt208"]
+[ext_resource type="Texture2D" uid="uid://cgj73rfnyxolp" path="res://pirate_6.png" id="7_d6eae"]
+[ext_resource type="Texture2D" uid="uid://dqp85x542ptes" path="res://pirate_7.png" id="8_4cfxr"]
+[ext_resource type="FontFile" uid="uid://dioipkk1bcbd0" path="res://prstart.ttf" id="10_dvuwo"]
+[ext_resource type="Texture2D" uid="uid://cuplalmc32qg1" path="res://Over.png" id="11_rba4c"]
+[ext_resource type="Texture2D" uid="uid://di708dxo7h763" path="res://Top.png" id="12_8t5tc"]
+[ext_resource type="Texture2D" uid="uid://o8ovbjfscbi0" path="res://Bottom.png" id="13_te485"]
+[ext_resource type="Texture2D" uid="uid://b785gemsvglew" path="res://Logo.png" id="14_y3jrp"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g8f2e"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_rl2rh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_dm23r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_pmr3y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_so750")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_aritt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_yt208")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_d6eae")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_4cfxr")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="Node2D" type="Node2D"]
+script = ExtResource("1_to4nk")
+
+[node name="PirateTop" type="AnimatedSprite2D" parent="."]
+position = Vector2(194, 225)
+sprite_frames = SubResource("SpriteFrames_g8f2e")
+speed_scale = 2.3
+
+[node name="Body" type="Area2D" parent="PirateTop"]
+collision_mask = 4
+
+[node name="Collision" type="CollisionPolygon2D" parent="PirateTop/Body"]
+polygon = PackedVector2Array(22, 93, 26, 84, 26, 64, 27, 42, 57, 31, 74, 32, 72, 13, 79, 3, 76, -18, 58, -18, 50, -29, 40, -30, 40, -48, 55, -49, 59, -66, 37, -85, 20, -100, 1, -102, -18, -89, -42, -78, -52, -66, -51, -57, -27, -52, -28, -27, -31, 33, -23, 60, -36, 75, -28, 93)
+
+[node name="PirateBottom" type="AnimatedSprite2D" parent="."]
+position = Vector2(194, 422)
+scale = Vector2(1, -1)
+sprite_frames = SubResource("SpriteFrames_g8f2e")
+speed_scale = 2.3
+
+[node name="Body" type="Area2D" parent="PirateBottom"]
+collision_layer = 2
+collision_mask = 8
+
+[node name="Collision" type="CollisionPolygon2D" parent="PirateBottom/Body"]
+polygon = PackedVector2Array(17, 85, 22, 76, 26, 64, 27, 42, 57, 31, 74, 32, 72, 13, 79, 3, 76, -18, 58, -18, 50, -29, 40, -30, 40, -48, 55, -49, 59, -66, 37, -85, 20, -100, 1, -102, -18, -89, -42, -78, -52, -66, -51, -57, -27, -52, -28, -27, -31, 33, -23, 60, -29, 66, -29, 85)
+
+[node name="Line2D" type="Line2D" parent="."]
+z_index = 1
+points = PackedVector2Array(0, 324, 1152, 324)
+default_color = Color(0, 0, 0, 1)
+
+[node name="ScoreText" type="Label" parent="."]
+z_index = 3
+offset_left = 10.0
+offset_top = 9.0
+offset_right = 174.0
+offset_bottom = 49.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("10_dvuwo")
+theme_override_font_sizes/font_size = 28
+text = "Score:"
+language = "en"
+
+[node name="ScoreNumber" type="Label" parent="."]
+z_index = 3
+offset_left = 8.0
+offset_top = 43.0
+offset_right = 175.0
+offset_bottom = 83.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("10_dvuwo")
+theme_override_font_sizes/font_size = 28
+text = "0"
+language = "en"
+
+[node name="GameOver" type="Node2D" parent="."]
+visible = false
+z_index = 2
+
+[node name="Fill" type="Polygon2D" parent="GameOver"]
+color = Color(1, 1, 1, 0.541176)
+polygon = PackedVector2Array(0, 0, 1152, 0, 1152, 648, 0, 648)
+
+[node name="Over" type="Sprite2D" parent="GameOver"]
+position = Vector2(576, 221)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("11_rba4c")
+
+[node name="Again" type="Button" parent="GameOver"]
+offset_left = 491.0
+offset_top = 374.0
+offset_right = 662.0
+offset_bottom = 424.0
+theme_override_font_sizes/font_size = 30
+text = "Play Again?"
+
+[node name="InstructionsTop" type="Sprite2D" parent="."]
+position = Vector2(576, 88)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("12_8t5tc")
+
+[node name="InstructionsBottom" type="Sprite2D" parent="."]
+position = Vector2(576, 560)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("13_te485")
+
+[node name="GameStart" type="Node2D" parent="."]
+z_index = 3
+
+[node name="Fill" type="Polygon2D" parent="GameStart"]
+color = Color(1, 1, 1, 0.541176)
+polygon = PackedVector2Array(0, 0, 1152, 0, 1152, 648, 0, 648)
+
+[node name="Logo" type="Sprite2D" parent="GameStart"]
+position = Vector2(576, 221)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("14_y3jrp")
+
+[node name="Start" type="Button" parent="GameStart"]
+offset_left = 491.0
+offset_top = 374.0
+offset_right = 662.0
+offset_bottom = 424.0
+theme_override_font_sizes/font_size = 30
+text = "Let's Play!"
+
+[connection signal="area_entered" from="PirateTop/Body" to="." method="_on_body_area_entered"]
+[connection signal="area_entered" from="PirateBottom/Body" to="." method="_on_body_area_entered"]
+[connection signal="pressed" from="GameOver/Again" to="." method="_on_again_pressed"]
+[connection signal="pressed" from="GameStart/Start" to="." method="_on_start_pressed"]
