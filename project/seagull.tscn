@@ -1,0 +1,54 @@
+[gd_scene load_steps=10 format=3 uid="uid://b5ne52uknpy41"]
+
+[ext_resource type="Texture2D" uid="uid://0ppx06706t1t" path="res://seagull_0.png" id="1_7no82"]
+[ext_resource type="Texture2D" uid="uid://c6v58ceqbv7xq" path="res://seagull_1.png" id="2_rl6lc"]
+[ext_resource type="Texture2D" uid="uid://cfv0nl73oheju" path="res://seagull_2.png" id="3_v77oy"]
+[ext_resource type="Texture2D" uid="uid://dg4hxdga8ebx3" path="res://seagull_3.png" id="4_2m48c"]
+[ext_resource type="Texture2D" uid="uid://2a3yl06q0qhe" path="res://seagull_4.png" id="5_rgc1o"]
+[ext_resource type="Texture2D" uid="uid://ldoootlx47v8" path="res://seagull_5.png" id="6_h1fng"]
+[ext_resource type="Texture2D" uid="uid://xfxnfx7828e" path="res://seagull_6.png" id="7_xkq6p"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kpnq3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_7no82")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_rl6lc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_v77oy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_2m48c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_rgc1o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_h1fng")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_xkq6p")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5agpc"]
+size = Vector2(450, 240)
+
+[node name="Seagull" type="AnimatedSprite2D"]
+z_index = -1
+scale = Vector2(0.3, 0.3)
+sprite_frames = SubResource("SpriteFrames_kpnq3")
+speed_scale = 2.0
+flip_h = true
+
+[node name="Body" type="Area2D" parent="."]
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+position = Vector2(-68.3333, -1.58946e-06)
+shape = SubResource("RectangleShape2D_5agpc")

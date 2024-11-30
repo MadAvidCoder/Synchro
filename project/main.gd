@@ -11,7 +11,9 @@ var top_buf = []
 var over = true
 var bottom_buf = []
 var top_dist = 3
+var top_gull_dist = 2
 var bottom_dist = 4
+var bottom_gull_dist = 1
 var speed = 1.2
 var count = 0
 var score = 0
@@ -20,8 +22,11 @@ var coins_areas = []
 var bottom_buf_areas = []
 var top_buf_areas = []
 var high_score = 0
+var seagulls = []
+var seagulls_areas = []
 @onready var shark = preload("res://shark.tscn")
 @onready var coin = preload("res://coin.tscn")
+@onready var seagull = preload("res://seagull.tscn")
 @onready var score_num = $ScoreNumber
 @onready var pirate_top = $PirateTop
 @onready var pirate_bottom = $PirateBottom
@@ -103,7 +108,8 @@ func _process(delta: float) -> void:
 		if score > high_score: high_score = score
 		
 		if top_dist <= 0:
-			if randf() < 0.9:
+			var rand = randf()
+			if rand < 0.75:
 				var n_shark = shark.instantiate()
 				n_shark.position = Vector2(1200,267)
 				var n_shark_body = n_shark.get_node("Body")
@@ -112,6 +118,16 @@ func _process(delta: float) -> void:
 				top_buf.append(n_shark)
 				top_buf_areas.append(n_shark_body)
 				top_dist = (randi_range(20,35)/10)/speed
+			elif rand < 0.9:
+				var n_gull = seagull.instantiate()
+				n_gull.play("default")
+				n_gull.position = Vector2(1200,61)
+				var n_gull_body = n_gull.get_node("Body")
+				n_gull_body.collision_layer = 0b100
+				add_child(n_gull)
+				seagulls.append(n_gull)
+				seagulls_areas.append(n_gull_body)
+				top_dist = (randi_range(15,30)/10)/(speed*1.08)
 			else:
 				var n_coin = coin.instantiate()
 				n_coin.play("default")
@@ -124,7 +140,8 @@ func _process(delta: float) -> void:
 				top_dist = (randi_range(10,20)/10)/speed
 		
 		if bottom_dist <= 0:
-			if randf() < 0.9:
+			var rand = randf()
+			if rand < 0.8:
 				var n_shark = shark.instantiate()
 				n_shark.position = Vector2(1200,381)
 				n_shark.rotation = PI
@@ -134,6 +151,17 @@ func _process(delta: float) -> void:
 				bottom_buf.append(n_shark)
 				bottom_buf_areas.append(n_shark_body)
 				bottom_dist = (randi_range(20,35)/10)/(speed*1.08)
+			elif rand < 0.9:
+				var n_gull = seagull.instantiate()
+				n_gull.play("default")
+				n_gull.position = Vector2(1200,587)
+				n_gull.flip_v = true
+				var n_gull_body = n_gull.get_node("Body")
+				n_gull_body.collision_layer = 0b1000
+				add_child(n_gull)
+				seagulls.append(n_gull)
+				seagulls_areas.append(n_gull_body)
+				bottom_dist = (randi_range(15,30)/10)/(speed*1.08)
 			else:
 				var n_coin = coin.instantiate()
 				n_coin.play("default")
@@ -153,6 +181,13 @@ func _process(delta: float) -> void:
 				i.queue_free()
 				coins.erase(i)
 		
+		for i in seagulls:
+			i.position.x -= delta*400*speed
+			if i.position.x <= -60:
+				seagulls_areas.erase(i.get_node("Body"))
+				i.queue_free()
+				seagulls.erase(i)
+		
 		for i in top_buf:
 			i.position.x -= delta*400*speed
 			if i.position.x <= -60:
@@ -170,9 +205,11 @@ func _process(delta: float) -> void:
 	else:
 		pirate_top.pause()
 		pirate_bottom.pause()
+		for i in seagulls:
+			i.pause()
 
 func _on_body_area_entered(area: Area2D) -> void:
-	if area in top_buf_areas or area in bottom_buf_areas:
+	if area in top_buf_areas or area in bottom_buf_areas or area in seagulls_areas:
 		over = true
 		over_disp.show()
 	elif area in coins_areas:
