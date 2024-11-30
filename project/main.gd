@@ -205,6 +205,8 @@ func _process(delta: float) -> void:
 		pirate_bottom.pause()
 		for i in seagulls:
 			i.pause()
+		for i in coins:
+			i.pause()
 
 func _on_body_area_entered(area: Area2D) -> void:
 	if area in top_buf_areas or area in bottom_buf_areas or area in seagulls_areas:
