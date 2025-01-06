@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://5pi4avo88sfa"]
+[gd_scene load_steps=21 format=3 uid="uid://5pi4avo88sfa"]
 
 [ext_resource type="Texture2D" uid="uid://5lksu436y5fg" path="res://pirate_0.png" id="1_rl2rh"]
 [ext_resource type="Script" path="res://main.gd" id="1_to4nk"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://di708dxo7h763" path="res://Top.png" id="12_8t5tc"]
 [ext_resource type="Texture2D" uid="uid://o8ovbjfscbi0" path="res://Bottom.png" id="13_te485"]
 [ext_resource type="Texture2D" uid="uid://b785gemsvglew" path="res://Logo.png" id="14_y3jrp"]
+[ext_resource type="PackedScene" uid="uid://c7gt38voibbjk" path="res://shield.tscn" id="15_yqw4m"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_g8f2e"]
 animations = [{
@@ -46,6 +47,22 @@ animations = [{
 "name": &"default",
 "speed": 5.0
 }]
+
+[sub_resource type="InputEventKey" id="InputEventKey_dxbmu"]
+device = -1
+key_label = 32
+unicode = 32
+
+[sub_resource type="Shortcut" id="Shortcut_1tqnh"]
+events = [SubResource("InputEventKey_dxbmu")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_ehqhk"]
+device = -1
+key_label = 32
+unicode = 32
+
+[sub_resource type="Shortcut" id="Shortcut_cusq2"]
+events = [SubResource("InputEventKey_ehqhk")]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_to4nk")
@@ -147,6 +164,7 @@ offset_top = 374.0
 offset_right = 662.0
 offset_bottom = 424.0
 theme_override_font_sizes/font_size = 30
+shortcut = SubResource("Shortcut_1tqnh")
 text = "Play Again?"
 
 [node name="InstructionsTop" type="Sprite2D" parent="."]
@@ -177,7 +195,13 @@ offset_top = 374.0
 offset_right = 662.0
 offset_bottom = 424.0
 theme_override_font_sizes/font_size = 30
+shortcut = SubResource("Shortcut_cusq2")
 text = "Let's Play!"
+
+[node name="Shield" parent="." instance=ExtResource("15_yqw4m")]
+visible = false
+position = Vector2(1119.9, 119.011)
+scale = Vector2(2.65556, 2.65556)
 
 [connection signal="area_entered" from="PirateTop/Body" to="." method="_on_body_area_entered"]
 [connection signal="area_entered" from="PirateBottom/Body" to="." method="_on_body_area_entered"]

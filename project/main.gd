@@ -22,9 +22,14 @@ var top_buf_areas = []
 var high_score = 0
 var seagulls = []
 var seagulls_areas = []
+var shield_timer = 0
+var shields = []
+var shields_areas = []
 @onready var shark = preload("res://shark.tscn")
 @onready var coin = preload("res://coin.tscn")
 @onready var seagull = preload("res://seagull.tscn")
+@onready var shield = preload("res://shield.tscn")
+@onready var big_shield = $Shield
 @onready var score_num = $ScoreNumber
 @onready var pirate_top = $PirateTop
 @onready var pirate_bottom = $PirateBottom
@@ -47,6 +52,10 @@ func reset() -> void:
 		i.queue_free()
 	coins = []
 	coins_areas = []
+	for i in shields:
+		i.queue_free()
+	shields = []
+	shields_areas = []
 	top_vel = 0
 	bottom_vel = 0
 	top_lock = false
@@ -54,6 +63,7 @@ func reset() -> void:
 	over = false
 	top_dist = 3
 	bottom_dist = 4
+	shield_timer = 0
 	speed = 1.2
 	count = 0
 	score = 0
@@ -97,10 +107,17 @@ func _process(delta: float) -> void:
 			else:
 				speed += delta/175
 		else:
-			speed += delta/1500
+			speed += delta/1000
 		
 		top_dist -= delta
 		bottom_dist -= delta
+		shield_timer -= delta
+		
+		if shield_timer <= 0:
+			big_shield.stop()
+			big_shield.hide()
+		elif shield_timer <= 1.5:
+			big_shield.play("default")
 		
 		score += delta*10
 		score_num.text = str(floor(score))
@@ -109,7 +126,7 @@ func _process(delta: float) -> void:
 		
 		if top_dist <= 0:
 			var rand = randf()
-			if rand < 0.75:
+			if rand < 0.71:
 				var n_shark = shark.instantiate()
 				n_shark.position = Vector2(1200,267)
 				var n_shark_body = n_shark.get_node("Body")
@@ -118,7 +135,7 @@ func _process(delta: float) -> void:
 				top_buf.append(n_shark)
 				top_buf_areas.append(n_shark_body)
 				top_dist = (randi_range(20,35)/10)/speed
-			elif rand < 0.9:
+			elif rand < 0.83:
 				var n_gull = seagull.instantiate()
 				n_gull.play("default")
 				n_gull.position = Vector2(1200,61)
@@ -128,6 +145,15 @@ func _process(delta: float) -> void:
 				seagulls.append(n_gull)
 				seagulls_areas.append(n_gull_body)
 				top_dist = (randi_range(15,30)/10)/(speed*1.08)
+			elif rand < 0.92 and shield_timer <= 0 and len(shields) == 0:
+				var n_shield = shield.instantiate()
+				n_shield.position = Vector2(1200,225)
+				var n_shield_body = n_shield.get_node("Body")
+				n_shield_body.collision_layer = 0b100
+				add_child(n_shield)
+				shields.append(n_shield)
+				shields_areas.append(n_shield_body)
+				top_dist = (randi_range(10,20)/10)/speed
 			else:
 				var n_coin = coin.instantiate()
 				n_coin.play("default")
@@ -141,7 +167,7 @@ func _process(delta: float) -> void:
 		
 		if bottom_dist <= 0:
 			var rand = randf()
-			if rand < 0.8:
+			if rand < 0.74:
 				var n_shark = shark.instantiate()
 				n_shark.position = Vector2(1200,381)
 				n_shark.rotation = PI
@@ -151,7 +177,7 @@ func _process(delta: float) -> void:
 				bottom_buf.append(n_shark)
 				bottom_buf_areas.append(n_shark_body)
 				bottom_dist = (randi_range(20,35)/10)/(speed*1.08)
-			elif rand < 0.9:
+			elif rand < 0.83:
 				var n_gull = seagull.instantiate()
 				n_gull.play("default")
 				n_gull.position = Vector2(1200,587)
@@ -162,6 +188,16 @@ func _process(delta: float) -> void:
 				seagulls.append(n_gull)
 				seagulls_areas.append(n_gull_body)
 				bottom_dist = (randi_range(15,30)/10)/(speed*1.08)
+			elif rand < 0.92 and shield_timer <= 0 and len(shields) == 0:
+				var n_shield = shield.instantiate()
+				n_shield.position = Vector2(1200,423)
+				n_shield.flip_v = true
+				var n_shield_body = n_shield.get_node("Body")
+				n_shield_body.collision_layer = 0b1000
+				add_child(n_shield)
+				shields.append(n_shield)
+				shields_areas.append(n_shield_body)
+				bottom_dist = (randi_range(10,20)/10)/(speed*1.08)
 			else:
 				var n_coin = coin.instantiate()
 				n_coin.play("default")
@@ -172,7 +208,13 @@ func _process(delta: float) -> void:
 				coins.append(n_coin)
 				coins_areas.append(n_coin_body)
 				bottom_dist = (randi_range(10,20)/10)/(speed*1.08)
-
+		
+		for i in shields:
+			i.position.x -= delta*400*speed
+			if i.position.x <= -60:
+				shields_areas.erase(i.get_node("Body"))
+				i.queue_free()
+				coins.erase(i)
 		
 		for i in coins:
 			i.position.x -= delta*400*speed
@@ -211,14 +253,25 @@ func _process(delta: float) -> void:
 			i.pause()
 
 func _on_body_area_entered(area: Area2D) -> void:
-	if area in top_buf_areas or area in bottom_buf_areas or area in seagulls_areas:
-		over = true
-		over_disp.show()
+	if (area in top_buf_areas or area in bottom_buf_areas or area in seagulls_areas):
+		if shield_timer <= -0.05:
+			shield_timer = 0
+		else:
+			over = true
+			over_disp.show()
 	elif area in coins_areas:
 		score += 100
 		area.get_parent().queue_free()
 		coins.erase(area.get_parent())
 		coins_areas.erase(area)
+	elif area in shields_areas:
+		area.get_parent().queue_free()
+		shields.erase(area.get_parent())
+		shields_areas.erase(area)
+		shield_timer = 4
+		big_shield.stop()
+		big_shield.frame = 0
+		big_shield.show()
 
 func _on_again_pressed() -> void:
 	reset()
