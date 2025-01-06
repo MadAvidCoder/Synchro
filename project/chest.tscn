@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://b61rh3ydaswsf"]
+
+[ext_resource type="Texture2D" uid="uid://7dqiw16p6gww" path="res://chest.png" id="1_4381f"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yox1w"]
+size = Vector2(15.5, 14.5)
+
+[node name="Chest" type="Sprite2D"]
+z_index = -1
+texture_filter = 1
+scale = Vector2(4, 4)
+texture = ExtResource("1_4381f")
+
+[node name="Body" type="Area2D" parent="."]
+
+[node name="Collision" type="CollisionShape2D" parent="Body"]
+shape = SubResource("RectangleShape2D_yox1w")
