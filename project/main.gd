@@ -102,7 +102,7 @@ func _process(delta: float) -> void:
 		else:
 			pirate_top.play("default")
 			if big_snowflake.visible:
-				top_vel -= (grav*delta)/1.5
+				top_vel -= (grav*delta)/1.4
 			else:
 				top_vel -= grav*delta
 		pirate_top.position.y -= top_vel*delta
@@ -117,7 +117,7 @@ func _process(delta: float) -> void:
 		else:
 			pirate_bottom.play("default")
 			if big_snowflake.visible:
-				bottom_vel -= (grav*delta)/1.5
+				bottom_vel -= (grav*delta)/1.4
 			else:
 				bottom_vel -= grav*delta
 		pirate_bottom.position.y += bottom_vel*delta
@@ -135,9 +135,9 @@ func _process(delta: float) -> void:
 				if count < 7:
 					count += delta
 				else:
-					speed += delta/175
+					speed += delta/180
 			else:
-				speed += delta/1000
+				speed += delta/950
 		
 		top_dist -= delta
 		bottom_dist -= delta
@@ -290,49 +290,42 @@ func _process(delta: float) -> void:
 				snowflake_areas.erase(i.get_node("Body"))
 				i.queue_free()
 				snowflakes.erase(i)
-		
 		for i in shields:
 			i.position.x -= delta*400*speed
 			if i.position.x <= -60:
 				shields_areas.erase(i.get_node("Body"))
 				i.queue_free()
 				shields.erase(i)
-		
 		for i in chests:
 			i.position.x -= delta*400*speed
 			if i.position.x <= -60:
 				chest_areas.erase(i.get_node("Body"))
 				i.queue_free()
 				chests.erase(i)
-		
 		for i in coins:
 			i.position.x -= delta*400*speed
 			if i.position.x <= -60:
 				coins_areas.erase(i.get_node("Body"))
 				i.queue_free()
 				coins.erase(i)
-		
 		for i in seagulls:
 			i.position.x -= delta*400*speed
 			if i.position.x <= -60:
 				seagulls_areas.erase(i.get_node("Body"))
 				i.queue_free()
 				seagulls.erase(i)
-		
 		for i in top_buf:
 			i.position.x -= delta*400*speed
 			if i.position.x <= -60:
 				top_buf_areas.erase(i.get_node("Body"))
 				i.queue_free()
 				top_buf.erase(i)
-		
 		for i in bottom_buf:
 			i.position.x -= delta*400*speed
 			if i.position.x <= -60:
 				bottom_buf_areas.erase(i.get_node("Body"))
 				i.queue_free()
 				bottom_buf.erase(i)
-
 	else:
 		pirate_top.pause()
 		pirate_bottom.pause()
@@ -411,7 +404,7 @@ func _on_body_area_entered(area: Area2D) -> void:
 			i.queue_free()
 		chests = []
 		chest_areas = []
-		
+	
 	elif area in snowflake_areas:
 		if big_snowflake.visible:
 			area.get_parent().queue_free()
